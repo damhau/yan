@@ -1,5 +1,17 @@
 cmake_minimum_required(VERSION 3.21)
-project(yan LANGUAGES CXX RC)
+# Version = latest git tag vX.Y.Z (CI tags each release from conventional commits).
+set(YAN_VERSION 0.0.0)
+find_package(Git QUIET)
+if(GIT_FOUND)
+  execute_process(COMMAND ${GIT_EXECUTABLE} describe --tags --abbrev=0 --match "v[0-9]*"
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE YAN_TAG
+    OUTPUT_STRIP_TRAILING_WHITESPACE ERROR_QUIET RESULT_VARIABLE YAN_TAG_RESULT)
+  if(YAN_TAG_RESULT EQUAL 0 AND YAN_TAG MATCHES "^v([0-9]+)[.]([0-9]+)[.]([0-9]+)$")
+    set(YAN_VERSION ${CMAKE_MATCH_1}.${CMAKE_MATCH_2}.${CMAKE_MATCH_3})
+  endif()
+endif()
+project(yan VERSION ${YAN_VERSION} LANGUAGES CXX RC)
+configure_file(src/version.h.in ${CMAKE_BINARY_DIR}/generated/version.h @ONLY)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
@@ -50,7 +62,7 @@ add_executable(yan WIN32
   src/settings.cpp
   res/yan.rc
 )
-target_include_directories(yan PRIVATE src ${CMAKE_SOURCE_DIR}/third_party/boost-regex/include)
+target_include_directories(yan PRIVATE src ${CMAKE_BINARY_DIR}/generated ${CMAKE_SOURCE_DIR}/third_party/boost-regex/include)
 target_compile_definitions(yan PRIVATE BOOST_REGEX_STANDALONE BOOST_REGEX_NO_LIB)
 target_compile_options(yan PRIVATE /W3)
 target_link_libraries(yan PRIVATE scintilla lexilla

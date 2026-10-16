@@ -116,3 +116,20 @@ tests/tests.cpp    tests and benchmarks (hidden Scintilla window)
 third_party/       Scintilla 5.6.7, Lexilla 5.5.4, Boost.Regex 1.91 (unmodified;
                    only the lexers in CMakeLists.txt LEX_LEXERS are compiled)
 ```
+
+## Versioning and releases
+
+Commits follow [Conventional Commits](https://www.conventionalcommits.org/) and versions
+follow [semver](https://semver.org/). Every push to `main` is built and tested by GitHub
+Actions; if it contains a releasable commit, the next version is tagged and a GitHub
+release is published with `yan.exe` attached:
+
+| Commit                                   | Example                            | Release           |
+|------------------------------------------|------------------------------------|-------------------|
+| `fix:` / `perf:`                         | `fix: crash when closing last tab` | patch 1.2.3 → 1.2.4 |
+| `feat:`                                  | `feat(find): add find in files`    | minor 1.2.3 → 1.3.0 |
+| `feat!:` or a `BREAKING CHANGE:` footer  | `feat!: new settings format`       | major 1.2.3 → 2.0.0 |
+| `docs:` `ci:` `refactor:` `chore:` `test:` `style:` `build:` | `docs: update README` | none |
+
+The version shown in the About box and in the exe's file properties comes from the
+latest `vX.Y.Z` git tag (local builds without tags show 0.0.0).

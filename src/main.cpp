@@ -1,5 +1,6 @@
 // Yan: a fast Notepad++-inspired text editor for Windows.
 #include "app.h"
+#include "version.h"
 #include <windowsx.h>
 #include <shellapi.h>
 #include <shobjidl.h>
@@ -1492,8 +1493,8 @@ void App::OnCommand(int id) {
 
     case CMD_ABOUT:
         MessageBoxW(hwnd,
-                    L"Yan 1.0\n\nA fast text editor inspired by Notepad++.\n\n"
-                    L"Built on Scintilla and Boost.Regex.\n"
+                    L"Yan " YAN_VERSION_WSTR L"\n\nA fast text editor inspired by Notepad++.\n\n"
+                    L"Built on Scintilla, Lexilla and Boost.Regex.\n"
                     L"Settings are stored in yan.ini (next to yan.exe for portable use, otherwise in %APPDATA%\\Yan).",
                     L"About Yan", MB_OK | MB_ICONINFORMATION);
         break;

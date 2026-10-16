@@ -1,11 +1,12 @@
 #include <windows.h>
+#include "version.h"
 
 CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "yan.manifest"
 1 ICON "yan.ico"
 
 VS_VERSION_INFO VERSIONINFO
-FILEVERSION 1,0,0,0
-PRODUCTVERSION 1,0,0,0
+FILEVERSION YAN_VERSION_MAJOR,YAN_VERSION_MINOR,YAN_VERSION_PATCH,0
+PRODUCTVERSION YAN_VERSION_MAJOR,YAN_VERSION_MINOR,YAN_VERSION_PATCH,0
 FILEOS VOS_NT_WINDOWS32
 FILETYPE VFT_APP
 BEGIN
@@ -14,9 +15,9 @@ BEGIN
     BLOCK "040904B0"
     BEGIN
       VALUE "FileDescription", "Yan - a fast text editor"
-      VALUE "FileVersion", "1.0.0"
+      VALUE "FileVersion", YAN_VERSION_STR
       VALUE "ProductName", "Yan"
-      VALUE "ProductVersion", "1.0.0"
+      VALUE "ProductVersion", YAN_VERSION_STR
       VALUE "OriginalFilename", "yan.exe"
     END
   END
