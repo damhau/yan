@@ -33,7 +33,7 @@ jobs:
       # after the build and tests pass.
       - name: Compute next version
         id: version
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: mathieudutour/github-tag-action@v6.2
         with:
           github_token: ${{ github.token }}
