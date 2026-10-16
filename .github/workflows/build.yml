@@ -1,0 +1,42 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write # needed to publish releases on tags
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The runner image ships Visual Studio 2022 with MSVC, CMake and Ninja;
+      # build.cmd finds them through vswhere.
+      - name: Build (Release)
+        shell: cmd
+        run: build.cmd
+
+      - name: Run tests
+        shell: cmd
+        run: build\Release\yan_tests.exe
+
+      - name: Upload yan.exe
+        uses: actions/upload-artifact@v4
+        with:
+          name: yan
+          path: build/Release/yan.exe
+          if-no-files-found: error
+
+      # Pushing a tag like v1.0.0 publishes a GitHub release with the exe attached.
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/Release/yan.exe
+          generate_release_notes: true
