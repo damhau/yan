@@ -54,7 +54,7 @@ void ConfigureEditor(const Sci& sci, const ViewOptions& opt, UINT dpi) {
     sci(SCI_SETMARGINTYPEN, MARGIN_HISTORY, SC_MARGIN_COLOUR);
     sci(SCI_SETMARGINMASKN, MARGIN_HISTORY, SC_MASK_HISTORY);
     sci(SCI_SETMARGINWIDTHN, MARGIN_HISTORY, std::max(3, Px(3, dpi)));
-    sci(SCI_SETMARGINLEFT, 0, 0);
+    sci(SCI_SETMARGINLEFT, 0, Px(6, dpi)); // breathing room between the gutter and the text
     sci(SCI_MARKERDEFINE, MARK_BOOKMARK, SC_MARK_BOOKMARK);
     for (int m : {SC_MARKNUM_HISTORY_REVERTED_TO_ORIGIN, SC_MARKNUM_HISTORY_SAVED, SC_MARKNUM_HISTORY_MODIFIED,
                   SC_MARKNUM_HISTORY_REVERTED_TO_MODIFIED})
